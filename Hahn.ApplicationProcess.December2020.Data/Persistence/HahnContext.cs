@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Hahn.ApplicationProcess.December2020.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +14,7 @@ namespace Hahn.ApplicationProcess.December2020.Data.Persistence
             : base(options)
         { }
         
-        public DbSet<Employee> Employees;
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -20,8 +22,8 @@ namespace Hahn.ApplicationProcess.December2020.Data.Persistence
                 .Property(c => c.Id)
                 .ValueGeneratedOnAdd();
         }
-        
-        public override int SaveChanges()
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             this.ChangeTracker.DetectChanges();
 
@@ -35,7 +37,7 @@ namespace Hahn.ApplicationProcess.December2020.Data.Persistence
                 entry.Property("LastUpdated").CurrentValue = DateTime.UtcNow;
             }
 
-            return base.SaveChanges();
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

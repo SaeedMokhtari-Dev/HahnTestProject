@@ -35,7 +35,16 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _employeeBusiness.GetById(id));
+            try
+            {
+                EmployeeGet employeeGet = await _employeeBusiness.GetById(id);
+                return StatusCode(201, employeeGet);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
         /// <summary>
         /// Create a new employee
@@ -52,12 +61,12 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
             try
             {
                 EmployeeGet employeeGet = await _employeeBusiness.Add(model);
-                string getUrl = $"{Request.Host.Value}/get/{employeeGet.Id}";
-                return Ok(getUrl);
+                string getUrl = $"{Request.Host.ToString()}/{employeeGet.Id}";
+                return StatusCode(201, getUrl);
             }
             catch (Exception exception)
             {
-                return StatusCode(500, $"{exception.Message} - {exception.InnerException?.Message}");
+                return StatusCode(500, exception.Message);
             }
         }
         
@@ -77,12 +86,12 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
             try
             {
                 EmployeeGet employeeGet = await _employeeBusiness.Update(model);
-                string getUrl = $"{Request.Host.Value}/get/{employeeGet.Id}";
-                return Ok(getUrl);
+                string getUrl = $"{Request.Host.ToString()}/{employeeGet.Id}";
+                return StatusCode(201, getUrl);
             }
             catch (Exception exception)
             {
-                return StatusCode(500, $"{exception.Message} - {exception.InnerException?.Message}");
+                return StatusCode(500, exception.Message);
             }
         }
         /// <summary>
@@ -102,11 +111,11 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
             try
             {
                 await _employeeBusiness.Delete(new EmployeeDelete(id));
-                return Ok(true);
+                return StatusCode(201, true);
             }
             catch (Exception exception)
             {
-                return StatusCode(500, $"{exception.Message} - {exception.InnerException?.Message}");
+                return StatusCode(500, exception.Message);
             }
         }
     }

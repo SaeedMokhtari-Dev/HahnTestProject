@@ -8,6 +8,7 @@ namespace Hahn.ApplicationProcess.December2020.Data.Entities
     [Table("Employee")]
     public class Employee: EntityBase
     {
+        
         [Required]
         [MinLength(5, ErrorMessage = "{0} must be larger than {1} character")]
         [MaxLength(50, ErrorMessage = "{0} must be smaller than {1} character")]

@@ -40,8 +40,15 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
                 }
             }
 
-            Employee employee = await _employeeRepository.Add(_mapper.Map<Employee>(employeeAdd));
-            return _mapper.Map<EmployeeGet>(employee);
+            try
+            {
+                Employee employee = await _employeeRepository.Add(_mapper.Map<Employee>(employeeAdd));
+                return _mapper.Map<EmployeeGet>(employee);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<EmployeeGet> Update(EmployeeUpdate employeeUpdate)
@@ -59,8 +66,15 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
                 }
             }
 
-            Employee employee = await _employeeRepository.Update(_mapper.Map<Employee>(employeeUpdate));
-            return _mapper.Map<EmployeeGet>(employee);
+            try
+            {
+                Employee employee = await _employeeRepository.Update(_mapper.Map<Employee>(employeeUpdate));
+                return _mapper.Map<EmployeeGet>(employee);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public async Task Delete(EmployeeDelete employeeDelete)
@@ -78,7 +92,14 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
                 }
             }
 
-            await _employeeRepository.Delete(_mapper.Map<Employee>(employeeDelete));
+            try
+            {
+                await _employeeRepository.Delete(_mapper.Map<Employee>(employeeDelete));
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public async Task<EmployeeGet> GetById(int id)
@@ -87,6 +108,8 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
                 throw new Exception("Id cannot be null or empty");
 
             Employee employee = await _employeeRepository.GetById(id);
+            if (employee == null)
+                throw new Exception("Employee with this id not found");
             return _mapper.Map<EmployeeGet>(employee);
         }
 

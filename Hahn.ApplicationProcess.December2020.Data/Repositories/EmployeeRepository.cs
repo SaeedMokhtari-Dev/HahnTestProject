@@ -12,27 +12,29 @@ namespace Hahn.ApplicationProcess.December2020.Data.Repositories
 {
     public class EmployeeRepository: IEmployeeRepository
     {
+        private readonly HahnContext _hahnContext;
+        public EmployeeRepository(HahnContext hahnContext)
+        {
+            _hahnContext = hahnContext;
+        }
         public async Task<Employee> Add(Employee employee)
         {
-            HahnContext context = ContextHelper.GetContext();
-            Employee newEmployee = (await context.Employees.AddAsync(employee)).Entity;
-            await context.SaveChangesAsync();
+            Employee newEmployee = (await _hahnContext.Employees.AddAsync(employee)).Entity;
+            await _hahnContext.SaveChangesAsync();
             return newEmployee;
         }
 
         public async Task<Employee> Update(Employee employee)
         {
-            HahnContext context = ContextHelper.GetContext();
-            Employee editEmployee = context.Employees.Attach(employee).Entity;
-            await context.SaveChangesAsync();
+            Employee editEmployee = _hahnContext.Employees.Attach(employee).Entity;
+            await _hahnContext.SaveChangesAsync();
             return editEmployee;
         }
 
         public async Task Delete(Employee employee)
         {
-            HahnContext context = ContextHelper.GetContext();
-            context.Employees.Remove(employee);
-            await context.SaveChangesAsync();
+            _hahnContext.Employees.Remove(employee);
+            await _hahnContext.SaveChangesAsync();
         }
 
         public async Task<Employee> GetById(int id)
@@ -40,14 +42,13 @@ namespace Hahn.ApplicationProcess.December2020.Data.Repositories
             if (id <= 0)
                 throw new Exception($"invalid id value!");
             
-            HahnContext context = ContextHelper.GetContext();
-            return await context.Employees.FindAsync(id);
+            return await _hahnContext.Employees.FindAsync(id);
         }
 
         public async Task<List<Employee>> GetAll()
         {
-            HahnContext context = ContextHelper.GetContext();
-            return await context.Employees.ToListAsync();
+            HahnContext _hahnContext = ContextHelper.GetContext();
+            return await _hahnContext.Employees.ToListAsync();
         }
     }
 }

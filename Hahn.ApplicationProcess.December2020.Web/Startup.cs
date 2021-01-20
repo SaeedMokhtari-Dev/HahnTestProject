@@ -5,10 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
+using Hahn.ApplicationProcess.December2020.Data;
+using Hahn.ApplicationProcess.December2020.Data.Persistence;
 using Hahn.ApplicationProcess.December2020.Data.Repositories;
 using Hahn.ApplicationProcess.December2020.Data.Repositories.Interfaces;
+using Hahn.ApplicationProcess.December2020.Domain;
 using Hahn.ApplicationProcess.December2020.Domain.Businesses;
 using Hahn.ApplicationProcess.December2020.Domain.Interfaces;
+using Hahn.ApplicationProcess.December2020.Domain.Mapping;
 using Hahn.ApplicationProcess.December2020.Domain.Models;
 using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
 using Hahn.ApplicationProcess.December2020.Web.Helpers;
@@ -16,6 +20,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,11 +42,9 @@ namespace Hahn.ApplicationProcess.December2020.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IEmployeeBusiness, EmployeeBusiness>();
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddControllers().AddXmlDataContractSerializerFormatters()
-                .AddXmlSerializerFormatters();
-            services.AddAutoMapper(typeof(Startup));
+            services.AddControllers();
+            DataDependencyLoader.ConfigureService(services);
+            DomainDependencyLoader.ConfigureService(services);
             SwaggerHelper.ConfigureService(services);
         }
 
