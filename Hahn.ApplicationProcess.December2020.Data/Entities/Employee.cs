@@ -5,8 +5,8 @@ using Hahn.ApplicationProcess.December2020.Data.Entities.Base;
 
 namespace Hahn.ApplicationProcess.December2020.Data.Entities
 {
-    [Table("Person")]
-    public class Person: EntityBase
+    [Table("Employee")]
+    public class Employee: EntityBase
     {
         [Required]
         [MinLength(5, ErrorMessage = "{0} must be larger than {1} character")]

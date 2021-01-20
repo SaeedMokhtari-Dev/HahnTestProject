@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Hahn.ApplicationProcess.December2020.Domain.Models.PersonModels
+﻿namespace Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels
 {
-    public class PersonModel
+    public class EmployeeModel
     {
         public string Name { get; set; }
 

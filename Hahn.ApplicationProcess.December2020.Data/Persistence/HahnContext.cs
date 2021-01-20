@@ -12,11 +12,11 @@ namespace Hahn.ApplicationProcess.December2020.Data.Persistence
             : base(options)
         { }
         
-        public DbSet<Person> People;
+        public DbSet<Employee> Employees;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Person>()
+            builder.Entity<Employee>()
                 .Property(c => c.Id)
                 .ValueGeneratedOnAdd();
         }
@@ -25,7 +25,7 @@ namespace Hahn.ApplicationProcess.December2020.Data.Persistence
         {
             this.ChangeTracker.DetectChanges();
 
-            var entries = this.ChangeTracker.Entries<Person>()
+            var entries = this.ChangeTracker.Entries<Employee>()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
             foreach (var entry in entries)

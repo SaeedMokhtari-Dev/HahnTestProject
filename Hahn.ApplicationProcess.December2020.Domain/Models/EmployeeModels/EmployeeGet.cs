@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Models.PersonModels
+namespace Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels
 {
-    public class PersonGet: PersonModel
+    public class EmployeeGet: EmployeeModel
     {
         public int Id { get; set; }
         

@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
-using Hahn.ApplicationProcess.December2020.Domain.Models.PersonModels;
+using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Validators.PersonValidators
+namespace Hahn.ApplicationProcess.December2020.Domain.Validators.EmployeeValidators
 {
-    public class PersonUpdateValidator: AbstractValidator<PersonUpdate> {
-        public PersonUpdateValidator()
+    public class EmployeeUpdateValidator: AbstractValidator<EmployeeUpdate> {
+        public EmployeeUpdateValidator()
         {
             RuleFor(x => x.Id).NotNull().NotEmpty();
             RuleFor(x => x.Name).NotEmpty().WithMessage("Please specify a name")
