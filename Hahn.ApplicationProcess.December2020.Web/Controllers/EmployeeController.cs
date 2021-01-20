@@ -7,10 +7,12 @@ using Hahn.ApplicationProcess.December2020.Domain.Interfaces;
 using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Hahn.ApplicationProcess.December2020.Web.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
@@ -26,12 +28,11 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         /// <summary>
         /// Get a employee
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id" example="1"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(EmployeeGet), 201)]
         [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("get/{id}")]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await _employeeBusiness.GetById(id));
@@ -45,7 +46,7 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         [ProducesResponseType(typeof(string), 201)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [Route("post")]
+        
         public async Task<IActionResult> Post([FromBody] EmployeeAdd model)
         {
             try
@@ -65,11 +66,10 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [ProducesResponseType(typeof(string), 201)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [Route("put")]
         public async Task<IActionResult> Put([FromBody] EmployeeUpdate model)
         {
             if (model.Id <= 0)
@@ -88,13 +88,12 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         /// <summary>
         /// Delete a employee
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id" example="1"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(typeof(bool), 201)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [Route("delete/{Id}")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0)
