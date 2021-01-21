@@ -7,6 +7,7 @@ using Hahn.ApplicationProcess.December2020.Data.Entities;
 using Hahn.ApplicationProcess.December2020.Data.Helpers;
 using Hahn.ApplicationProcess.December2020.Data.Persistence;
 using Hahn.ApplicationProcess.December2020.Data.Repositories.Interfaces;
+using Hahn.ApplicationProcess.December2020.Domain.HTTPClients;
 using Hahn.ApplicationProcess.December2020.Domain.Interfaces;
 using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
 using Hahn.ApplicationProcess.December2020.Domain.Validators.EmployeeValidators;
@@ -19,15 +20,17 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
-        public EmployeeBusiness(IEmployeeRepository employeeRepository, IMapper mapper)
+        private readonly RestCountryClient _restCountryClient;
+        public EmployeeBusiness(IEmployeeRepository employeeRepository, IMapper mapper, RestCountryClient restCountryClient)
         {
             _employeeRepository = employeeRepository;
             _mapper = mapper;
+            _restCountryClient = restCountryClient;
         }
         
         public async Task<EmployeeGet> Add(EmployeeAdd employeeAdd)
         {
-            EmployeeAddValidator employeeAddValidator = new EmployeeAddValidator();
+            EmployeeAddValidator employeeAddValidator = new EmployeeAddValidator(_restCountryClient);
 
             ValidationResult results = await employeeAddValidator.ValidateAsync(employeeAdd);
 
@@ -39,7 +42,7 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
                                         failure.ErrorMessage);
                 }
             }
-
+            
             try
             {
                 Employee employee = await _employeeRepository.Add(_mapper.Map<Employee>(employeeAdd));
@@ -53,7 +56,7 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
 
         public async Task<EmployeeGet> Update(EmployeeUpdate employeeUpdate)
         {
-            EmployeeUpdateValidator employeeUpdateValidator = new EmployeeUpdateValidator();
+            EmployeeUpdateValidator employeeUpdateValidator = new EmployeeUpdateValidator(_restCountryClient);
 
             ValidationResult results = await employeeUpdateValidator.ValidateAsync(employeeUpdate);
 

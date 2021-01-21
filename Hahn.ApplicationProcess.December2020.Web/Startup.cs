@@ -43,6 +43,7 @@ namespace Hahn.ApplicationProcess.December2020.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            HttpClientHelper.ConfigureService(services, Configuration);
             DataDependencyLoader.ConfigureService(services);
             DomainDependencyLoader.ConfigureService(services);
             SwaggerHelper.ConfigureService(services);

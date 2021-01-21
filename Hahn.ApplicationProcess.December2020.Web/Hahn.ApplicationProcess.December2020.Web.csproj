@@ -15,8 +15,4 @@
       <ProjectReference Include="..\Hahn.ApplicationProcess.December2020.Domain\Hahn.ApplicationProcess.December2020.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Configs" />
-    </ItemGroup>
-
 </Project>
