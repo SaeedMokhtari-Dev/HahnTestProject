@@ -4,35 +4,31 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.Results;
 using Hahn.ApplicationProcess.December2020.Data.Entities;
-using Hahn.ApplicationProcess.December2020.Data.Helpers;
-using Hahn.ApplicationProcess.December2020.Data.Persistence;
 using Hahn.ApplicationProcess.December2020.Data.Repositories.Interfaces;
 using Hahn.ApplicationProcess.December2020.Domain.HTTPClients;
 using Hahn.ApplicationProcess.December2020.Domain.Interfaces;
-using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
-using Hahn.ApplicationProcess.December2020.Domain.Validators.EmployeeValidators;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
+using Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels;
+using Hahn.ApplicationProcess.December2020.Domain.Validators.ApplicantValidators;
 
 namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
 {
-    public class EmployeeBusiness : IEmployeeBusiness
+    public class ApplicantBusiness : IApplicantBusiness
     {
-        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IApplicantRepository _applicantRepository;
         private readonly IMapper _mapper;
         private readonly RestCountryClient _restCountryClient;
-        public EmployeeBusiness(IEmployeeRepository employeeRepository, IMapper mapper, RestCountryClient restCountryClient)
+        public ApplicantBusiness(IApplicantRepository applicantRepository, IMapper mapper, RestCountryClient restCountryClient)
         {
-            _employeeRepository = employeeRepository;
+            _applicantRepository = applicantRepository;
             _mapper = mapper;
             _restCountryClient = restCountryClient;
         }
         
-        public async Task<EmployeeGet> Add(EmployeeAdd employeeAdd)
+        public async Task<ApplicantGet> Add(ApplicantAdd applicantAdd)
         {
-            EmployeeAddValidator employeeAddValidator = new EmployeeAddValidator(_restCountryClient);
+            ApplicantAddValidator applicantAddValidator = new ApplicantAddValidator(_restCountryClient);
 
-            ValidationResult results = await employeeAddValidator.ValidateAsync(employeeAdd);
+            ValidationResult results = await applicantAddValidator.ValidateAsync(applicantAdd);
 
             if (!results.IsValid)
             {
@@ -45,8 +41,8 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
             
             try
             {
-                Employee employee = await _employeeRepository.Add(_mapper.Map<Employee>(employeeAdd));
-                return _mapper.Map<EmployeeGet>(employee);
+                Applicant applicant = await _applicantRepository.Add(_mapper.Map<Applicant>(applicantAdd));
+                return _mapper.Map<ApplicantGet>(applicant);
             }
             catch (Exception ex)
             {
@@ -54,11 +50,11 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
             }
         }
 
-        public async Task<EmployeeGet> Update(EmployeeUpdate employeeUpdate)
+        public async Task<ApplicantGet> Update(ApplicantUpdate applicantUpdate)
         {
-            EmployeeUpdateValidator employeeUpdateValidator = new EmployeeUpdateValidator(_restCountryClient);
+            ApplicantUpdateValidator applicantUpdateValidator = new ApplicantUpdateValidator(_restCountryClient);
 
-            ValidationResult results = await employeeUpdateValidator.ValidateAsync(employeeUpdate);
+            ValidationResult results = await applicantUpdateValidator.ValidateAsync(applicantUpdate);
 
             if (!results.IsValid)
             {
@@ -71,8 +67,8 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
 
             try
             {
-                Employee employee = await _employeeRepository.Update(_mapper.Map<Employee>(employeeUpdate));
-                return _mapper.Map<EmployeeGet>(employee);
+                Applicant applicant = await _applicantRepository.Update(_mapper.Map<Applicant>(applicantUpdate));
+                return _mapper.Map<ApplicantGet>(applicant);
             }
             catch (Exception exception)
             {
@@ -80,11 +76,11 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
             }
         }
 
-        public async Task Delete(EmployeeDelete employeeDelete)
+        public async Task Delete(ApplicantDelete applicantDelete)
         {
-            EmployeeDeleteValidator employeeDeleteValidator = new EmployeeDeleteValidator();
+            ApplicantDeleteValidator applicantDeleteValidator = new ApplicantDeleteValidator();
 
-            ValidationResult results = await employeeDeleteValidator.ValidateAsync(employeeDelete);
+            ValidationResult results = await applicantDeleteValidator.ValidateAsync(applicantDelete);
 
             if (!results.IsValid)
             {
@@ -97,7 +93,7 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
 
             try
             {
-                await _employeeRepository.Delete(_mapper.Map<Employee>(employeeDelete));
+                await _applicantRepository.Delete(_mapper.Map<Applicant>(applicantDelete));
             }
             catch (Exception exception)
             {
@@ -105,21 +101,21 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Businesses
             }
         }
 
-        public async Task<EmployeeGet> GetById(int id)
+        public async Task<ApplicantGet> GetById(int id)
         {
             if (id <= 0)
                 throw new Exception("Id cannot be null or empty");
 
-            Employee employee = await _employeeRepository.GetById(id);
-            if (employee == null)
-                throw new Exception("Employee with this id not found");
-            return _mapper.Map<EmployeeGet>(employee);
+            Applicant applicant = await _applicantRepository.GetById(id);
+            if (applicant == null)
+                throw new Exception("Applicant with this id not found");
+            return _mapper.Map<ApplicantGet>(applicant);
         }
 
-        public async Task<List<EmployeeGet>> GetAll()
+        public async Task<List<ApplicantGet>> GetAll()
         {
-            List<Employee> people = await _employeeRepository.GetAll();
-            return _mapper.Map<List<EmployeeGet>>(people);
+            List<Applicant> people = await _applicantRepository.GetAll();
+            return _mapper.Map<List<ApplicantGet>>(people);
         }
     }
 }

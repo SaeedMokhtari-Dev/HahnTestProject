@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using Hahn.ApplicationProcess.December2020.Domain.Models;
-using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;

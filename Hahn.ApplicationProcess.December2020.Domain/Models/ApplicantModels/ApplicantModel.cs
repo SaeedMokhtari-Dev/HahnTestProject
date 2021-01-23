@@ -1,13 +1,9 @@
 ﻿using Swashbuckle.AspNetCore.Filters;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels
+namespace Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels
 {
-    public class EmployeeModel: IModel, IExamplesProvider<EmployeeModel>
+    public class ApplicantModel: IModel, IExamplesProvider<ApplicantModel>
     {
-        /// <summary>
-        /// name of employee
-        /// </summary>
-        /// <example>Saeed</example>
         public string Name { get; set; }
 
         public string FamilyName { get; set; }
@@ -21,9 +17,9 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels
         public int Age { get; set; }
         
         public bool Hired { get; set; }
-        public EmployeeModel GetExamples()
+        public ApplicantModel GetExamples()
         {
-            return new EmployeeModel()
+            return new()
             {
                 Name = "Saeed",
                 FamilyName = "Mokhtari",

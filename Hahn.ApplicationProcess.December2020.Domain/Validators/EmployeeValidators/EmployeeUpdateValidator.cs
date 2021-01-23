@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 using Hahn.ApplicationProcess.December2020.Domain.HTTPClients;
-using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
+using Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Validators.EmployeeValidators
+namespace Hahn.ApplicationProcess.December2020.Domain.Validators.ApplicantValidators
 {
-    public class EmployeeUpdateValidator: AbstractValidator<EmployeeUpdate> {
+    public class ApplicantUpdateValidator: AbstractValidator<ApplicantUpdate> {
         private readonly RestCountryClient _restCountryClient;
-        public EmployeeUpdateValidator(RestCountryClient restCountryClient)
+        public ApplicantUpdateValidator(RestCountryClient restCountryClient)
         {
             _restCountryClient = restCountryClient;
             RuleFor(x => x.Id).NotNull().NotEmpty();

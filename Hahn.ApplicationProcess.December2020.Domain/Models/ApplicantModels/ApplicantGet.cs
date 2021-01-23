@@ -1,16 +1,16 @@
 ﻿using System;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels
+namespace Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels
 {
-    public class EmployeeGet: EmployeeModel, IExamplesProvider<EmployeeGet>
+    public class ApplicantGet: ApplicantModel, IExamplesProvider<ApplicantGet>
     {
         public int Id { get; set; }
         
         public DateTime CreatedDate { get; set; }
 
         public DateTime LastUpdated { get; set; }
-        public new EmployeeGet GetExamples()
+        public new ApplicantGet GetExamples()
         {
             return new()
             {

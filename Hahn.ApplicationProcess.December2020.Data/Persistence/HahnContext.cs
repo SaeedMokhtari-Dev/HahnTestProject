@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +13,11 @@ namespace Hahn.ApplicationProcess.December2020.Data.Persistence
             : base(options)
         { }
         
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Applicant> Applicants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Employee>()
+            builder.Entity<Applicant>()
                 .Property(c => c.Id)
                 .ValueGeneratedOnAdd();
         }
@@ -27,7 +26,7 @@ namespace Hahn.ApplicationProcess.December2020.Data.Persistence
         {
             this.ChangeTracker.DetectChanges();
 
-            var entries = this.ChangeTracker.Entries<Employee>()
+            var entries = this.ChangeTracker.Entries<Applicant>()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
             foreach (var entry in entries)

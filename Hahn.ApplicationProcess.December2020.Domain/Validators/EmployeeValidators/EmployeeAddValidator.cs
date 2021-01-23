@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 using Hahn.ApplicationProcess.December2020.Domain.HTTPClients;
-using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
+using Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Validators.EmployeeValidators
+namespace Hahn.ApplicationProcess.December2020.Domain.Validators.ApplicantValidators
 {
-    public class EmployeeAddValidator: AbstractValidator<EmployeeAdd>
+    public class ApplicantAddValidator: AbstractValidator<ApplicantAdd>
     {
         private readonly RestCountryClient _restCountryClient; 
-        public EmployeeAddValidator(RestCountryClient restCountryClient) {
+        public ApplicantAddValidator(RestCountryClient restCountryClient) {
             _restCountryClient = restCountryClient;
             
             RuleFor(x => x.Name).NotEmpty().WithMessage("Please specify a name")

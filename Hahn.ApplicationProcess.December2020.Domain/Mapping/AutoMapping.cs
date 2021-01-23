@@ -1,8 +1,6 @@
-﻿using System;
-using AutoMapper;
-using AutoMapper.Configuration;
+﻿using AutoMapper;
 using Hahn.ApplicationProcess.December2020.Data.Entities;
-using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
+using Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels;
 
 namespace Hahn.ApplicationProcess.December2020.Domain.Mapping
 {
@@ -10,10 +8,10 @@ namespace Hahn.ApplicationProcess.December2020.Domain.Mapping
     {
         public AutoMapping()
         {
-            CreateMap<EmployeeAdd, Employee>().ReverseMap();
-            CreateMap<EmployeeUpdate, Employee>().ReverseMap();
-            CreateMap<EmployeeDelete, Employee>().ReverseMap();
-            CreateMap<Employee, EmployeeGet>().ReverseMap();
+            CreateMap<ApplicantAdd, Applicant>().ReverseMap();
+            CreateMap<ApplicantUpdate, Applicant>().ReverseMap();
+            CreateMap<ApplicantDelete, Applicant>().ReverseMap();
+            CreateMap<Applicant, ApplicantGet>().ReverseMap();
         }
     }
 }

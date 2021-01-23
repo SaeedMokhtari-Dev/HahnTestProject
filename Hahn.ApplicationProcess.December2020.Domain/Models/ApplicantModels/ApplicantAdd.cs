@@ -1,15 +1,13 @@
 ﻿using Swashbuckle.AspNetCore.Filters;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels
+namespace Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels
 {
-    public class EmployeeUpdate: EmployeeModel, IExamplesProvider<EmployeeUpdate>
+    public class ApplicantAdd : ApplicantModel, IExamplesProvider<ApplicantAdd>
     {
-        public int Id { get; set; }
-        public new EmployeeUpdate GetExamples()
+        public new ApplicantAdd GetExamples()
         {
             return new()
             {
-                Id = 1,
                 Name = "Saeed",
                 FamilyName = "Mokhtari",
                 Address = "413 South Brickyard Ave.Flushing, NY 11354",

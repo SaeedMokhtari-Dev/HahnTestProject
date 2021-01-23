@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hahn.ApplicationProcess.December2020.Data.Entities.Base;
 
 namespace Hahn.ApplicationProcess.December2020.Data.Entities
 {
-    [Table("Employee")]
-    public class Employee: EntityBase
+    [Table("Applicant")]
+    public class Applicant: EntityBase
     {
         
         [Required]

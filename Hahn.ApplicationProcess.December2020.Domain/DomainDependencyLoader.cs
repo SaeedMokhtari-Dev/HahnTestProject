@@ -10,7 +10,7 @@ namespace Hahn.ApplicationProcess.December2020.Domain
     {
         public static void ConfigureService(IServiceCollection services)
         {
-            services.AddScoped<IEmployeeBusiness, EmployeeBusiness>();
+            services.AddScoped<IApplicantBusiness, ApplicantBusiness>();
             services.AddAutoMapper(typeof(AutoMapping));
         }
     }

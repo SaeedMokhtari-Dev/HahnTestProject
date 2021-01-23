@@ -10,7 +10,7 @@ namespace Hahn.ApplicationProcess.December2020.Data
     {
         public static void ConfigureService(IServiceCollection services)
         {
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IApplicantRepository, ApplicantRepository>();
             services.AddDbContext<HahnContext>(options =>
             {
                 options.UseInMemoryDatabase("Hahn");

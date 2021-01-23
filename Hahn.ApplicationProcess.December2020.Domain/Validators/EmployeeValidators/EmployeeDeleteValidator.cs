@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
+using Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels;
 
-namespace Hahn.ApplicationProcess.December2020.Domain.Validators.EmployeeValidators
+namespace Hahn.ApplicationProcess.December2020.Domain.Validators.ApplicantValidators
 {
-    public class EmployeeDeleteValidator: AbstractValidator<EmployeeDelete> {
-        public EmployeeDeleteValidator()
+    public class ApplicantDeleteValidator: AbstractValidator<ApplicantDelete> {
+        public ApplicantDeleteValidator()
         {
             RuleFor(x => x.Id).NotNull().NotEmpty();
         }

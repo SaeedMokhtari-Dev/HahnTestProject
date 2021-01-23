@@ -1,5 +1,4 @@
-﻿using System;
-using Hahn.ApplicationProcess.December2020.Domain.Configs;
+﻿using Hahn.ApplicationProcess.December2020.Domain.Configs;
 using Hahn.ApplicationProcess.December2020.Domain.HTTPClients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
