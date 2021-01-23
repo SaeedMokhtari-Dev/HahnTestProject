@@ -16,6 +16,7 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
+        private const string CONTROLLERENTITY = "Employee";
         private readonly ILogger<EmployeeController> _logger;
         private readonly IEmployeeBusiness _employeeBusiness;
 
@@ -37,11 +38,13 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         {
             try
             {
+                _logger.LogDebug($"REST request to get {CONTROLLERENTITY} : {id}");
                 EmployeeGet employeeGet = await _employeeBusiness.GetById(id);
                 return StatusCode(201, employeeGet);
             }
             catch (Exception exception)
             {
+                _logger.LogError($"Error Occured in {Request.Path}: {exception.Message}");
                 return BadRequest(exception.Message);
             }
             
@@ -60,12 +63,14 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         {
             try
             {
+                _logger.LogDebug($"REST request to create new {CONTROLLERENTITY} : {model}");
                 EmployeeGet employeeGet = await _employeeBusiness.Add(model);
                 string getUrl = $"{Request.Host.ToString()}/{employeeGet.Id}";
                 return StatusCode(201, getUrl);
             }
             catch (Exception exception)
             {
+                _logger.LogError($"Error Occured in {Request.Path}: {exception.Message}");
                 return StatusCode(500, exception.Message);
             }
         }
@@ -85,12 +90,14 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
                 return BadRequest($"Invalid parameter!");
             try
             {
+                _logger.LogDebug($"REST request to edit {CONTROLLERENTITY} : {model}");
                 EmployeeGet employeeGet = await _employeeBusiness.Update(model);
                 string getUrl = $"{Request.Host.ToString()}/{employeeGet.Id}";
                 return StatusCode(201, getUrl);
             }
             catch (Exception exception)
             {
+                _logger.LogError($"Error Occured in {Request.Path}: {exception.Message}");
                 return StatusCode(500, exception.Message);
             }
         }
@@ -110,11 +117,13 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
 
             try
             {
+                _logger.LogDebug($"REST request to delete {CONTROLLERENTITY} : {id}");
                 await _employeeBusiness.Delete(new EmployeeDelete(id));
                 return StatusCode(201, true);
             }
             catch (Exception exception)
             {
+                _logger.LogError($"Error Occured in {Request.Path}: {exception.Message}");
                 return StatusCode(500, exception.Message);
             }
         }

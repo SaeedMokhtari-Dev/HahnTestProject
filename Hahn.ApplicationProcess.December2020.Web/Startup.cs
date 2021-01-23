@@ -26,6 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Hahn.ApplicationProcess.December2020.Web
@@ -61,6 +62,8 @@ namespace Hahn.ApplicationProcess.December2020.Web
             }
 
             app.UseHttpsRedirection();
+            
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 
