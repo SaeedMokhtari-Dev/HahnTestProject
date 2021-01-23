@@ -7,6 +7,7 @@ using Hahn.ApplicationProcess.December2020.Domain.Interfaces;
 using Hahn.ApplicationProcess.December2020.Domain.Models.EmployeeModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Hahn.ApplicationProcess.December2020.Web.Controllers
@@ -63,7 +64,7 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
         {
             try
             {
-                _logger.LogDebug($"REST request to create new {CONTROLLERENTITY} : {model}");
+                _logger.LogDebug($"REST request to create new {CONTROLLERENTITY} : {JsonConvert.SerializeObject(model)}");
                 EmployeeGet employeeGet = await _employeeBusiness.Add(model);
                 string getUrl = $"{Request.Host.ToString()}/{employeeGet.Id}";
                 return StatusCode(201, getUrl);
@@ -90,7 +91,7 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
                 return BadRequest($"Invalid parameter!");
             try
             {
-                _logger.LogDebug($"REST request to edit {CONTROLLERENTITY} : {model}");
+                _logger.LogDebug($"REST request to edit {CONTROLLERENTITY} : {JsonConvert.SerializeObject(model)}");
                 EmployeeGet employeeGet = await _employeeBusiness.Update(model);
                 string getUrl = $"{Request.Host.ToString()}/{employeeGet.Id}";
                 return StatusCode(201, getUrl);
