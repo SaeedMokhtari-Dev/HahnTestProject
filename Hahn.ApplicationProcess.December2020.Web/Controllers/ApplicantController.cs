@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hahn.ApplicationProcess.December2020.Domain.Interfaces;
+using Hahn.ApplicationProcess.December2020.Domain.Models;
 using Hahn.ApplicationProcess.December2020.Domain.Models.ApplicantModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,7 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ApplicantController : ControllerBase
     {
         private const string CONTROLLERENTITY = "Applicant";
@@ -48,6 +49,28 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
             
         }
         /// <summary>
+        /// Get all of applicants
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<ApplicantGet>), 201)]
+        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                _logger.LogDebug($"REST request to get all of {CONTROLLERENTITY}");
+                List<ApplicantGet> applicantGet = await _applicantBusiness.GetAll();
+                return StatusCode(201, applicantGet);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"Error Occured in {Request.Path}: {exception.Message}");
+                return BadRequest(exception.Message);
+            }
+            
+        }
+        /// <summary>
         /// Create a new applicant
         /// </summary>
         /// <param name="model"></param>
@@ -64,7 +87,7 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
                 _logger.LogDebug($"REST request to create new {CONTROLLERENTITY} : {JsonConvert.SerializeObject(model)}");
                 ApplicantGet applicantGet = await _applicantBusiness.Add(model);
                 string getUrl = $"{Request.Host.ToString()}/{applicantGet.Id}";
-                return StatusCode(201, getUrl);
+                return StatusCode(201, new ResponseModel(applicantGet.Id, getUrl));
             }
             catch (Exception exception)
             {
@@ -91,7 +114,7 @@ namespace Hahn.ApplicationProcess.December2020.Web.Controllers
                 _logger.LogDebug($"REST request to edit {CONTROLLERENTITY} : {JsonConvert.SerializeObject(model)}");
                 ApplicantGet applicantGet = await _applicantBusiness.Update(model);
                 string getUrl = $"{Request.Host.ToString()}/{applicantGet.Id}";
-                return StatusCode(201, getUrl);
+                return StatusCode(201, new ResponseModel(applicantGet.Id, getUrl));
             }
             catch (Exception exception)
             {

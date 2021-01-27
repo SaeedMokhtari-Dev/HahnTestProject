@@ -27,6 +27,13 @@ namespace Hahn.ApplicationProcess.December2020.Web
             DataDependencyLoader.ConfigureService(services);
             DomainDependencyLoader.ConfigureService(services);
             SwaggerHelper.ConfigureService(services);
+            /*services.AddCors(options =>
+            {
+                options.AddPolicy("default", builder =>
+                {
+                    builder.
+                });
+            })*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +47,8 @@ namespace Hahn.ApplicationProcess.December2020.Web
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hahn Test Project v1"));
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            
             app.UseHttpsRedirection();
             
             app.UseSerilogRequestLogging();
